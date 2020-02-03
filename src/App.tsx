@@ -1,9 +1,12 @@
 import React from 'react';
+import { Typography } from 'antd';
 
 const App = () => {
   return (
     <div>
-      Sample App
+      <Typography.Title>
+        Sample App
+      </Typography.Title>
     </div>
   );
 }
