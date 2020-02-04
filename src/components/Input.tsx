@@ -2,7 +2,7 @@ import React from 'react';
 import { Input as AntdInput } from 'antd';
 
 export const inputStyles = {
-  background: '#e3f6f9',
+  background: '#f7f9ff',
   border: 0,
   height: 50,
 };

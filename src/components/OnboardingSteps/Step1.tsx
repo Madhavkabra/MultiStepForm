@@ -14,12 +14,8 @@ const styles = {
   form: {
     marginTop: 25
   },
-  formItem: {
-    alignItems: 'flex-start',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '0 15px',
-    marginBottom: 0,
+  blockField: {
+    padding: "0 10px"
   },
 };
 
@@ -39,8 +35,8 @@ const Step1Form = ({ form, onSubmit }: any) => {
   return (
     <Form style={styles.form} onSubmit={handleSubmit}>
       <Row>
-        <Col md={12} xs={24}>
-          <Form.Item label="First Name">
+        <Col md={12} xs={24} style={styles.blockField}>
+          <Form.Item wrapperCol={{ sm: 24 }} label="First Name" style={{alignItems: 'flex-start', display: 'flex',flexDirection: 'column',padding: '0 15px',marginBottom: 0,}}>
             {getFieldDecorator('firstName', {
               rules: [{ required: true, message: 'Please enter your first name!' }]
             })(
@@ -49,7 +45,7 @@ const Step1Form = ({ form, onSubmit }: any) => {
           </Form.Item>
         </Col>
         <Col md={12} xs={24}>
-          <Form.Item label="Last Name">
+          <Form.Item wrapperCol={{ sm: 24 }} label="Last Name"  style={{alignItems: 'flex-start', display: 'flex',flexDirection: 'column',padding: '0 15px',marginBottom: 0,}}>
             {getFieldDecorator('lastName', {
               rules: [{ required: true, message: 'Please enter your last name!' }]
             })(
@@ -58,7 +54,7 @@ const Step1Form = ({ form, onSubmit }: any) => {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item label="Email">
+          <Form.Item wrapperCol={{ sm: 24 }} label="Email" style={{alignItems: 'flex-start', display: 'flex',flexDirection: 'column',padding: '0 15px',marginBottom: 0,}}>
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Please enter your email!' },
@@ -72,7 +68,7 @@ const Step1Form = ({ form, onSubmit }: any) => {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item label="Phone number">
+          <Form.Item wrapperCol={{ sm: 24 }} label="Phone number" style={{alignItems: 'flex-start', display: 'flex',flexDirection: 'column',padding: '0 15px',marginBottom: 0,}}>
            {getFieldDecorator('phone', {
               rules: [{
                 required: true,
