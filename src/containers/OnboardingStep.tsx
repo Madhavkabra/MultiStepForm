@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Card, Layout, Typography, Col } from 'antd';
 import {  } from 'antd/lib/form/Form';
 import Step1 from '../components/OnboardingSteps/Step1';
 import Step2 from '../components/OnboardingSteps/Step2';
 import Step3 from '../components/OnboardingSteps/Step3';
 import queryString from 'query-string';
-import { checkUserId } from '../firebase/db'
+import { checkUserId, setOnboardingDetails } from '../firebase/db'
 
 const styles = {
   wrapper: {
@@ -56,13 +56,16 @@ const stepForm: StepForm = {
 };
 
 const OnboardingStep = ({ match, history, location }: any) => {
-
+  const [userId, setUserId] = useState<any>('');
+  
   useEffect(() => {
     (async function getUser() {
       const queryParams = queryString.parse(location.search);
       const userId = await checkUserId(queryParams)
+      setUserId(userId)
     })();
   }, []);
+
 
   const { stepNumber }: StepParams = match.params;
   const FormComponent = stepForm[stepNumber];
@@ -70,9 +73,12 @@ const OnboardingStep = ({ match, history, location }: any) => {
   const handleSubmit = (values: any) => {
     const nextStep = parseInt(stepNumber, 10) + 1;
     if (nextStep !== 4) {
-      history.push(`/onboarding/${nextStep}`);
+      setOnboardingDetails(userId, values)
+      console.log(userId)
+      history.push(`/onboarding/${nextStep}?userId=${userId}`);
     }
   };
+
 
   return (
     <Layout style={styles.wrapper}>

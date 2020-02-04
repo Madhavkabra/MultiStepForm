@@ -26,7 +26,7 @@ const Step1Form = ({ form, onSubmit }: any) => {
     e.preventDefault();
     form.validateFields((err: Error, values: any) => {
       if (!err) {
-        console.log(values);
+        // console.log(values);
         onSubmit(values)
       }
     });
