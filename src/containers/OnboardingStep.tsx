@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { Card, Layout, Typography, Col } from 'antd';
 import {  } from 'antd/lib/form/Form';
 import Step1 from '../components/OnboardingSteps/Step1';
 import Step2 from '../components/OnboardingSteps/Step2';
 import Step3 from '../components/OnboardingSteps/Step3';
+import queryString from 'query-string';
+import { checkUserId } from '../firebase/db'
 
 const styles = {
   wrapper: {
@@ -53,7 +55,15 @@ const stepForm: StepForm = {
   '3': Step3,
 };
 
-const OnboardingStep = ({ match, history }: any) => {
+const OnboardingStep = ({ match, history, location }: any) => {
+
+  useEffect(() => {
+    (async function getUser() {
+      const queryParams = queryString.parse(location.search);
+      const userId = await checkUserId(queryParams)
+    })();
+  }, []);
+
   const { stepNumber }: StepParams = match.params;
   const FormComponent = stepForm[stepNumber];
 
@@ -69,9 +79,9 @@ const OnboardingStep = ({ match, history }: any) => {
       <Col lg={8} md={16}>
         <Card style={styles.card} bodyStyle={{ textAlign: 'center' }}>
           <Typography.Title style={styles.title} level={2}>User Onboarding</Typography.Title>
-            <Typography.Paragraph style={styles.stepDetail}>
-              Part {stepNumber}/3 - {stepDescription[stepNumber]}
-            </Typography.Paragraph>
+          <Typography.Paragraph style={styles.stepDetail}>
+            Part {stepNumber}/3 - {stepDescription[stepNumber]}
+          </Typography.Paragraph>
           <FormComponent onSubmit={handleSubmit} />
         </Card>
       </Col>
