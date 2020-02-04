@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Card, Layout, Typography } from 'antd';
+import { Card, Layout, Typography, Col } from 'antd';
 import {  } from 'antd/lib/form/Form';
 import Step1 from '../components/OnboardingSteps/Step1';
 import Step2 from '../components/OnboardingSteps/Step2';
@@ -11,9 +11,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
+    margin: '0 15px',
   },
   card: {
-    width: '35%',
     display: 'flex',
     justifyContent: 'center',
     border: 0,
@@ -66,13 +66,15 @@ const OnboardingStep = ({ match, history }: any) => {
 
   return (
     <Layout style={styles.wrapper}>
-      <Card style={styles.card} bodyStyle={{ textAlign: 'center' }}>
-        <Typography.Title style={styles.title} level={2}>User Onboarding</Typography.Title>
-          <Typography.Paragraph style={styles.stepDetail}>
-            Part {stepNumber}/3 - {stepDescription[stepNumber]}
-          </Typography.Paragraph>
-        <FormComponent onSubmit={handleSubmit} />
-      </Card>
+      <Col lg={8} md={16}>
+        <Card style={styles.card} bodyStyle={{ textAlign: 'center' }}>
+          <Typography.Title style={styles.title} level={2}>User Onboarding</Typography.Title>
+            <Typography.Paragraph style={styles.stepDetail}>
+              Part {stepNumber}/3 - {stepDescription[stepNumber]}
+            </Typography.Paragraph>
+          <FormComponent onSubmit={handleSubmit} />
+        </Card>
+      </Col>
     </Layout>
   );
 };
