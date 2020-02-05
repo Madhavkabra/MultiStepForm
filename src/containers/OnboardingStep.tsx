@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Card, Layout, Typography, Col } from 'antd';
-import {  } from 'antd/lib/form/Form';
+import { } from 'antd/lib/form/Form';
 import Step1 from '../components/OnboardingSteps/Step1';
 import Step2 from '../components/OnboardingSteps/Step2';
 import Step3 from '../components/OnboardingSteps/Step3';
 import queryString from 'query-string';
-import { checkUserId, setOnboardingDetails } from '../firebase/db'
+import { checkUserId, setOnboardingDetails } from '../firebase/db';
+import Alert from '../components/Alert';
 
 const styles = {
   wrapper: {
@@ -57,7 +58,8 @@ const stepForm: StepForm = {
 
 const OnboardingStep = ({ match, history, location }: any) => {
   const [userId, setUserId] = useState<any>('');
-  
+  const [notify, setNotify] = useState<Boolean>(false)
+
   useEffect(() => {
     (async function getUser() {
       const queryParams = queryString.parse(location.search);
@@ -66,19 +68,18 @@ const OnboardingStep = ({ match, history, location }: any) => {
     })();
   }, []);
 
-
   const { stepNumber }: StepParams = match.params;
   const FormComponent = stepForm[stepNumber];
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     const nextStep = parseInt(stepNumber, 10) + 1;
     if (nextStep !== 4) {
-      setOnboardingDetails(userId, values)
-      console.log(userId)
+      setNotify(true)
+      await setOnboardingDetails(userId, values)
+      setNotify(false)
       history.push(`/onboarding/${nextStep}?userId=${userId}`);
     }
   };
-
 
   return (
     <Layout style={styles.wrapper}>
@@ -91,6 +92,7 @@ const OnboardingStep = ({ match, history, location }: any) => {
           <FormComponent onSubmit={handleSubmit} />
         </Card>
       </Col>
+      <Alert open={notify} />
     </Layout>
   );
 };
