@@ -9,7 +9,7 @@ interface IProps extends FormProps {
 
 }
 
-const Step3Form = ({ form, onSubmit }: any) => {
+const Step3Form = ({ form, onSubmit, userData }: any) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<Boolean>(false)
 
@@ -29,7 +29,8 @@ const Step3Form = ({ form, onSubmit }: any) => {
         <Col span={24}>
           <Form.Item label="Why are you intrested in software engineering?">
             {getFieldDecorator('shortResponse', {
-              rules: [{ required: true, message: 'Please proivde a response.' }]
+              rules: [{ required: true, message: 'Please proivde a response.' }],
+              initialValue: userData.shortResponse
             })(
               <TextArea />
             )}

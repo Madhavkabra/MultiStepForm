@@ -1,7 +1,7 @@
 import { db } from './firebase';
 
 interface queryParameters {
-  userId?: Number;
+  userId?: any;
 }
 
 export const checkUserId = async (params: queryParameters) => {
@@ -16,9 +16,16 @@ const createNewUser = async () => {
   return detailsRef.id
 }
 
-export const setOnboardingDetails = (userId: string, data:any) => db
+export const setOnboardingDetails = (userId: string, data: any) => db
   .collection('onboardingDetails')
   .doc(`${userId}`)
   .set({
-   ...data
-  }, {merge: true});;
+    ...data
+  }, { merge: true });;
+
+export const getOnboardingDetails = async (userId: string| string[] | null | undefined) => {
+  const userRef = db.collection('onboardingDetails').doc(`${userId}`);
+  const getDoc = await userRef.get();
+  const snapshot = await getDoc.data();
+  return <Object>snapshot;
+}

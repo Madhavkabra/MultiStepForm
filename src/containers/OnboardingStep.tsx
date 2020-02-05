@@ -5,8 +5,9 @@ import Step1 from '../components/OnboardingSteps/Step1';
 import Step2 from '../components/OnboardingSteps/Step2';
 import Step3 from '../components/OnboardingSteps/Step3';
 import queryString from 'query-string';
-import { checkUserId, setOnboardingDetails } from '../firebase/db';
+import { checkUserId, setOnboardingDetails, getOnboardingDetails } from '../firebase/db';
 import Alert from '../components/Alert';
+import { ClipLoader } from "react-spinners";
 
 const styles = {
   wrapper: {
@@ -59,12 +60,17 @@ const stepForm: StepForm = {
 const OnboardingStep = ({ match, history, location }: any) => {
   const [userId, setUserId] = useState<any>('');
   const [notify, setNotify] = useState<Boolean>(false)
+  const [userData, setUserData] = useState<Object>({})
+  const [fetchComplete, setFetchComplete] = useState<Boolean>(false)
 
   useEffect(() => {
     (async function getUser() {
       const queryParams = queryString.parse(location.search);
-      const userId = await checkUserId(queryParams)
-      setUserId(userId)
+      const userID = await checkUserId(queryParams)
+      setUserId(userID)
+      const userDatA = await getOnboardingDetails(userID)
+      setUserData(userDatA)
+      setFetchComplete(true)
     })();
   }, []);
 
@@ -89,7 +95,13 @@ const OnboardingStep = ({ match, history, location }: any) => {
           <Typography.Paragraph style={styles.stepDetail}>
             Part {stepNumber}/3 - {stepDescription[stepNumber]}
           </Typography.Paragraph>
-          <FormComponent onSubmit={handleSubmit} />
+          <ClipLoader
+            size={150}
+            color={"#123abc"}
+            loading={!fetchComplete}
+          />
+          {fetchComplete &&
+            <FormComponent onSubmit={handleSubmit} userData={userData} />}
         </Card>
       </Col>
       <Alert open={notify} />

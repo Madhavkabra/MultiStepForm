@@ -3,7 +3,7 @@ import { Row, Col, Form } from 'antd';
 import Button from '../Button';
 import Input from '../Input';
 
-const Step2Form = ({ form, onSubmit }: any) => {
+const Step2Form = ({ form, onSubmit, userData }: any) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<Boolean>(false)
 
@@ -24,7 +24,8 @@ const Step2Form = ({ form, onSubmit }: any) => {
           <Col span={24}>
             <Form.Item label="Which College did you go to?">
               {getFieldDecorator('college', {
-                rules: [{ required: true, message: 'Please enter your college name!' }]
+                rules: [{ required: true, message: 'Please enter your college name!' }],
+                initialValue: userData.college
               })(
                 <Input type="text" />
               )}
@@ -33,7 +34,8 @@ const Step2Form = ({ form, onSubmit }: any) => {
           <Col span={24}>
             <Form.Item label="What was the last company you worked at?">
               {getFieldDecorator('lastCompany', {
-                rules: [{ required: true, message: 'Please enter your previous company name!' }]
+                rules: [{ required: true, message: 'Please enter your previous company name!' }],
+                initialValue: userData.lastCompany
               })(
                 <Input type="text" />
               )}
@@ -52,6 +54,7 @@ const Step2Form = ({ form, onSubmit }: any) => {
                     message: 'Please enter an valid number',
                   },
                 ],
+                initialValue: userData.yearsOfExperience
               })(
                 <Input type="number" />
               )}

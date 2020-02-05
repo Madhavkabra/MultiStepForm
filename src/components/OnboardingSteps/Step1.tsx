@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -6,6 +6,7 @@ import {
 } from 'antd';
 import Button from '../Button';
 import Input from '../Input';
+
 
 const styles = {
   buttonWrapper: {
@@ -19,7 +20,7 @@ const styles = {
   },
 };
 
-const Step1Form = ({ form, onSubmit }: any) => {
+const Step1Form = ({ form, onSubmit, userData }: any) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<Boolean>(false)
 
@@ -39,7 +40,8 @@ const Step1Form = ({ form, onSubmit }: any) => {
         <Col md={12} xs={24} style={styles.blockField}>
           <Form.Item wrapperCol={{ sm: 24 }} label="First Name" style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', padding: '0 15px', marginBottom: 0, }}>
             {getFieldDecorator('firstName', {
-              rules: [{ required: true, message: 'Please enter your first name!' }]
+              rules: [{ required: true, message: 'Please enter your first name!' }],
+              initialValue: userData.firstName
             })(
               <Input type="text" />
             )}
@@ -48,7 +50,8 @@ const Step1Form = ({ form, onSubmit }: any) => {
         <Col md={12} xs={24}>
           <Form.Item wrapperCol={{ sm: 24 }} label="Last Name" style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', padding: '0 15px', marginBottom: 0, }}>
             {getFieldDecorator('lastName', {
-              rules: [{ required: true, message: 'Please enter your last name!' }]
+              rules: [{ required: true, message: 'Please enter your last name!' }],
+              initialValue: userData.lastName
             })(
               <Input type="text" />
             )}
@@ -63,7 +66,8 @@ const Step1Form = ({ form, onSubmit }: any) => {
                   type: 'email',
                   message: 'Please enter valid E-mail!',
                 },
-              ]
+              ],
+              initialValue: userData.email
             })(
               <Input type="text" />
             )}
@@ -80,7 +84,8 @@ const Step1Form = ({ form, onSubmit }: any) => {
                 pattern: /[2-9]{2}\d{8}/,
                 message: 'Phone number must have exact 10 digits and must not start from 1 or 0!',
               },
-              ]
+              ],
+              initialValue: userData.phone
             })(
               <Input type="number" />
             )}
