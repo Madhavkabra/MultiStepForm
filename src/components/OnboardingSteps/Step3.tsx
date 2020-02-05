@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Input, Row, Col, Form } from 'antd';
 import { FormProps } from 'antd/lib/form/Form';
 import Button from '../Button';
@@ -11,12 +11,13 @@ interface IProps extends FormProps {
 
 const Step3Form = ({ form, onSubmit }: any) => {
   const { getFieldDecorator } = form;
+  const [isLoading, setIsLoading] = useState<Boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     form.validateFields((err: Error, values: any) => {
       if (!err) {
-        // console.log(values);
+        setIsLoading(true)
         onSubmit(values);
       }
     });
@@ -34,9 +35,8 @@ const Step3Form = ({ form, onSubmit }: any) => {
             )}
           </Form.Item>
         </Col>
-
         <Col span={24} className="Continue_btn">
-          <Button type="primary" htmlType="submit">Continue</Button>
+          <Button disabled={isLoading} type="primary" htmlType="submit">Continue</Button>
         </Col>
       </Row>
     </Form>

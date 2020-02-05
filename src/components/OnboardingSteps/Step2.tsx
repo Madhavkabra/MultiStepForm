@@ -1,16 +1,17 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Row, Col, Form } from 'antd';
 import Button from '../Button';
 import Input from '../Input';
 
 const Step2Form = ({ form, onSubmit }: any) => {
   const { getFieldDecorator } = form;
+  const [isLoading, setIsLoading] = useState<Boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     form.validateFields((err: Error, values: any) => {
       if (!err) {
-        // console.log(values);
+        setIsLoading(true)
         onSubmit(values);
       }
     });
@@ -57,7 +58,7 @@ const Step2Form = ({ form, onSubmit }: any) => {
             </Form.Item>
           </Col>
           <Col span={24} className="Continue_btn">
-            <Button type="primary" htmlType="submit">Continue</Button>
+            <Button disabled={isLoading} type="primary" htmlType="submit">Continue</Button>
           </Col>
         </Row>
       </Form>
