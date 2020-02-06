@@ -38,7 +38,7 @@ const Step1Form = ({ form, onSubmit, userData }: any) => {
     <Form style={styles.form} onSubmit={handleSubmit}>
       <Row>
         <Col md={12} xs={24} style={styles.blockField}>
-          <Form.Item wrapperCol={{ sm: 24 }} label="First Name" style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', padding: '0 15px', marginBottom: 0, }}>
+          <Form.Item wrapperCol={{ sm: 24 }} label="First Name" style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', marginBottom: 0, }}>
             {getFieldDecorator('firstName', {
               rules: [{ required: true, message: 'Please enter your first name!' }],
               initialValue: userData.firstName

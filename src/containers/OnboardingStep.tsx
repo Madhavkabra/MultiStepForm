@@ -68,8 +68,8 @@ const OnboardingStep = ({ match, history, location }: any) => {
       const queryParams = queryString.parse(location.search);
       const userID = await checkUserId(queryParams)
       setUserId(userID)
-      const userDatA = await getOnboardingDetails(userID)
-      setUserData(userDatA)
+      const userData = await getOnboardingDetails(userID)
+      setUserData(userData)
       setFetchComplete(true)
     })();
   }, []);
@@ -79,10 +79,10 @@ const OnboardingStep = ({ match, history, location }: any) => {
 
   const handleSubmit = async (values: any) => {
     const nextStep = parseInt(stepNumber, 10) + 1;
+    setNotify(true)
+    await setOnboardingDetails(userId, values)
+    setNotify(false)
     if (nextStep !== 4) {
-      setNotify(true)
-      await setOnboardingDetails(userId, values)
-      setNotify(false)
       history.push(`/onboarding/${nextStep}?userId=${userId}`);
     }
   };

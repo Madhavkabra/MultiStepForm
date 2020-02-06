@@ -23,7 +23,7 @@ export const setOnboardingDetails = (userId: string, data: any) => db
     ...data
   }, { merge: true });;
 
-export const getOnboardingDetails = async (userId: string| string[] | null | undefined) => {
+export const getOnboardingDetails = async (userId: string) => {
   const userRef = db.collection('onboardingDetails').doc(`${userId}`);
   const getDoc = await userRef.get();
   const snapshot = await getDoc.data();
