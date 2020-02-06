@@ -7,7 +7,7 @@ import Step3 from '../components/OnboardingSteps/Step3';
 import queryString from 'query-string';
 import { checkUserId, setOnboardingDetails, getOnboardingDetails } from '../firebase/db';
 import Alert from '../components/Alert';
-import { ClipLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 
 const styles = {
   wrapper: {
@@ -95,9 +95,9 @@ const OnboardingStep = ({ match, history, location }: any) => {
           <Typography.Paragraph style={styles.stepDetail}>
             Part {stepNumber}/3 - {stepDescription[stepNumber]}
           </Typography.Paragraph>
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
+          <PulseLoader
+            size={10}
+            color={"#33CCFF"}
             loading={!fetchComplete}
           />
           {fetchComplete &&
