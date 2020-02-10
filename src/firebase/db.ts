@@ -16,12 +16,13 @@ const createNewUser = async () => {
   return detailsRef.id
 }
 
-export const setOnboardingDetails = (userId: string, data: any) => db
-  .collection('onboardingDetails')
-  .doc(`${userId}`)
-  .set({
+export const setOnboardingDetails = async(userId: string, data: any) => {
+  const onboardingCollection = await db.collection('onboardingDetails');
+  const onboardingDocument = await onboardingCollection.doc(`${userId}`);
+  await onboardingDocument.set({
     ...data
-  }, { merge: true });;
+  }, { merge: true });
+};
 
 export const getOnboardingDetails = async (userId: string) => {
   const userRef = db.collection('onboardingDetails').doc(`${userId}`);
