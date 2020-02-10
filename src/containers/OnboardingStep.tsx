@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Card, Layout, Typography, Col } from 'antd';
 import { } from 'antd/lib/form/Form';
 import Step1 from '../components/OnboardingSteps/Step1';
@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import { checkUserId, setOnboardingDetails, getOnboardingDetails } from '../firebase/db';
 import Alert from '../components/Alert';
 import { PulseLoader } from "react-spinners";
+import { RouteComponentProps } from "react-router-dom";
 
 const styles = {
   wrapper: {
@@ -35,14 +36,31 @@ const styles = {
   },
 };
 
+interface userData {
+  firstName?: string;
+  lastName?: string;
+  college?: string;
+  email?: string;
+  lastCompany?: string;
+  phone?: number;
+  shortResponse?: string;
+  yearsOfExperince?: number;
+}
+
+interface MatchParams {
+  stepNumber: string;
+}
+
+interface IProps extends RouteComponentProps<MatchParams> {
+}
+
 interface StepDescription {
   [key: string]: string
 }
 
 interface StepForm {
-  [key: string]: FunctionComponent | any,
+  [key: string]: Component | any,
 }
-
 interface StepParams { stepNumber: string };
 
 const stepDescription: StepDescription = {
@@ -57,11 +75,11 @@ const stepForm: StepForm = {
   '3': Step3,
 };
 
-const OnboardingStep = ({ match, history, location }: any) => {
-  const [userId, setUserId] = useState<any>('');
-  const [notify, setNotify] = useState<Boolean>(false)
-  const [userData, setUserData] = useState<Object>({})
-  const [fetchComplete, setFetchComplete] = useState<Boolean>(false)
+const OnboardingStep = ({ match, history, location }: IProps) => {
+  const [userId, setUserId] = useState<string>('');
+  const [notify, setNotify] = useState<boolean>(false)
+  const [userData, setUserData] = useState<object>({})
+  const [fetchComplete, setFetchComplete] = useState<boolean>(false)
 
   useEffect(() => {
     (async function getUser() {
@@ -72,12 +90,12 @@ const OnboardingStep = ({ match, history, location }: any) => {
       setUserData(userData)
       setFetchComplete(true)
     })();
-  }, []);
+  }, [location.search]);
 
   const { stepNumber }: StepParams = match.params;
   const FormComponent = stepForm[stepNumber];
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: userData) => {
     const nextStep = parseInt(stepNumber, 10) + 1;
     setNotify(true)
     await setOnboardingDetails(userId, values)

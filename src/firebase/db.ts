@@ -1,7 +1,18 @@
 import { db } from './firebase';
 
 interface queryParameters {
-  userId?: any;
+  userId?: string;
+}
+
+interface Data {
+  firstName?: string;
+  lastName?: string;
+  college?: string;
+  email?: string;
+  lastCompany?: string;
+  phone?: number;
+  shortResponse?: string;
+  yearsOfExperince?: number;  
 }
 
 export const checkUserId = async (params: queryParameters) => {
@@ -16,7 +27,7 @@ const createNewUser = async () => {
   return detailsRef.id
 }
 
-export const setOnboardingDetails = async(userId: string, data: any) => {
+export const setOnboardingDetails = async(userId: string, data: Data) => {
   const onboardingCollection = await db.collection('onboardingDetails');
   const onboardingDocument = await onboardingCollection.doc(`${userId}`);
   await onboardingDocument.set({

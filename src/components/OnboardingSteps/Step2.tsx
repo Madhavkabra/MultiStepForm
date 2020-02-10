@@ -1,15 +1,27 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useState, FormEvent } from 'react';
 import { Row, Col, Form } from 'antd';
 import Button from '../Button';
 import Input from '../Input';
+import { FormComponentProps } from 'antd/lib/form/Form';
 
-const Step2Form = ({ form, onSubmit, userData }: any) => {
+interface UserData extends FormEvent<HTMLFormElement> {
+  college?: string,
+  lastCompany?: string,
+  yearsOfExperience?: number
+}
+
+interface IProps extends FormComponentProps {
+  userData: UserData;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
+const Step2Form = ({ form, onSubmit, userData }: IProps) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    form.validateFields((err: Error, values: any) => {
+    form.validateFields((err: Error, values: UserData) => {
       if (!err) {
         setIsLoading(true)
         onSubmit(values);
@@ -70,6 +82,6 @@ const Step2Form = ({ form, onSubmit, userData }: any) => {
   );
 }
 
-const Step2 = Form.create<any>({ name: 'step2Form' })(Step2Form);
+const Step2 = Form.create<IProps>({ name: 'step2Form' })(Step2Form);
 
 export default Step2;

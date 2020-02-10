@@ -1,7 +1,6 @@
 import React from 'react';
 import { Input as AntdInput } from 'antd';
 import { InputProps } from 'antd/lib/input/Input'
-import * as PropTypes from 'prop-types';
 
 export const inputStyles = {
   background: '#f7f9ff',

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useState, FormEvent } from 'react';
 import {
   Row,
   Col,
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-interface UserData {
+interface UserData extends FormEvent<HTMLFormElement> {
   firstName?: string,
   lastName?: string,
   email?: string,
@@ -38,7 +38,7 @@ const Step1Form = ({ form, onSubmit, userData }: IProps) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    form.validateFields((err: Error, values: any) => {
+    form.validateFields((err: Error, values: UserData) => {
       if (!err) {
         setIsLoading(true)
         onSubmit(values)
@@ -111,6 +111,6 @@ const Step1Form = ({ form, onSubmit, userData }: IProps) => {
   );
 };
 
-const Step1 = Form.create<any>({ name: 'step1Form' })(Step1Form);
+const Step1 = Form.create<IProps>({ name: 'step1Form' })(Step1Form);
 
 export default Step1;
