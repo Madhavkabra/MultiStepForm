@@ -1,23 +1,17 @@
 import React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import { Alert } from 'antd';
 
-function Alert(props: any) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+interface Iprops {
+  open: Boolean
+}   
 
-const Snackbars = (props: any) => {
+const AlertMessage = (props: Iprops) => {
   return (
-    <Snackbar
-      open={props.open}
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      key={'top, center'}
-    >
-      <Alert severity='info'>
-        Please Wait.
-      </Alert>
-    </Snackbar>
+    <div>
+      {props.open &&
+        <Alert message="Please Wait" type="info" showIcon />}
+    </div>
   );
 }
 
-export default Snackbars;
+export default AlertMessage;
