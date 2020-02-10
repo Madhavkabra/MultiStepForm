@@ -1,15 +1,21 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { Input, Row, Col, Form } from 'antd';
-import { FormProps } from 'antd/lib/form/Form';
+import { FormProps, FormComponentProps } from 'antd/lib/form/Form';
 import Button from '../Button';
-
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from "react-router";
 const { TextArea } = Input;
 
-interface IProps extends FormProps {
-
+interface UserData {
+  shortResponse?: string,
 }
 
-const Step3Form = ({ form, onSubmit, userData }: any) => {
+interface IProps extends RouteComponentProps<{}>, FormComponentProps {
+  userData: UserData;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
+const Step3Form = ({ form, onSubmit, userData, history }: IProps) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<Boolean>(false)
 
@@ -19,6 +25,9 @@ const Step3Form = ({ form, onSubmit, userData }: any) => {
       if (!err) {
         setIsLoading(true)
         onSubmit(values);
+        history.replace({
+          pathname: '/success',
+        })
       }
     });
   };
@@ -44,6 +53,6 @@ const Step3Form = ({ form, onSubmit, userData }: any) => {
   );
 };
 
-const Step3 = Form.create<any>({ name: 'step3Form' })(Step3Form);
+let Step3 = withRouter(Step3Form)
+export default Form.create<any>({ name: 'step3Form' })(Step3);
 
-export default Step3;
