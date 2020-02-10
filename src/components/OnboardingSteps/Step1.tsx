@@ -81,8 +81,8 @@ const Step1Form = ({ form, onSubmit, userData }: any) => {
                 message: 'Please enter your phone number!'
               },
               {
-                pattern: /[2-9]{2}\d{8}/,
-                message: 'Phone number must have exact 10 digits and must not start from 1 or 0!',
+                pattern: /^[2-9][0-9]*$/,
+                message: 'Phone number must have 10 digits only and must not start with 0 ot 1!',
               },
               ],
               initialValue: userData.phone
