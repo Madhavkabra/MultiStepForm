@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import Button from '../Button';
 import Input from '../Input';
-
+import { FormComponentProps } from 'antd/lib/form/Form';
 
 const styles = {
   buttonWrapper: {
@@ -20,7 +20,19 @@ const styles = {
   },
 };
 
-const Step1Form = ({ form, onSubmit, userData }: any) => {
+interface UserData {
+  firstName?: string,
+  lastName?: string,
+  email?: string,
+  phone?: number
+}
+
+interface IProps extends FormComponentProps {
+  userData: UserData;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
+const Step1Form = ({ form, onSubmit, userData }: IProps) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -81,8 +93,8 @@ const Step1Form = ({ form, onSubmit, userData }: any) => {
                 message: 'Please enter your phone number!'
               },
               {
-                pattern: /^[2-9][0-9]*$/,
-                message: 'Phone number must have 10 digits only and must not start with 0 ot 1!',
+                pattern: /[2-9]{2}\d{8}/,
+                message: 'Phone number must have exact 10 digits and must not start from 1 or 0!',
               },
               ],
               initialValue: userData.phone
