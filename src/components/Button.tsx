@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button as AntdButton } from 'antd';
+import { NativeButtonProps } from "antd/lib/button/button";
 
 export const buttonStyles = {
   background: '#00c5ff',
@@ -11,7 +12,9 @@ export const buttonStyles = {
   width: '100%',
 };
 
-const Button = (props: any) => (
+interface Button extends NativeButtonProps { }
+
+const Button = (props: Button) => (
   <AntdButton style={buttonStyles} {...props} />
 );
 

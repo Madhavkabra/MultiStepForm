@@ -17,7 +17,7 @@ interface IProps extends RouteComponentProps<{}>, FormComponentProps {
 
 const Step3Form = ({ form, onSubmit, userData, history }: IProps) => {
   const { getFieldDecorator } = form;
-  const [isLoading, setIsLoading] = useState<Boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

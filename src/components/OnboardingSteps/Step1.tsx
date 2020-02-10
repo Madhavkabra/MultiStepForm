@@ -22,7 +22,7 @@ const styles = {
 
 const Step1Form = ({ form, onSubmit, userData }: any) => {
   const { getFieldDecorator } = form;
-  const [isLoading, setIsLoading] = useState<Boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
