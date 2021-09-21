@@ -1,4 +1,5 @@
 # Future School
+The app can be accessed at https://the-future-school-a44d4.web.app/onboarding/1
 
 ### Getting Started
 
